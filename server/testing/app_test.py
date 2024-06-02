@@ -1,9 +1,5 @@
 import json
-from os import environ
-import re
-
 from flask import request
-
 from app import app
 from models import db, Bakery, BakedGood
 
@@ -14,7 +10,6 @@ class TestApp:
         '''can POST new baked goods through "/baked_goods" route.'''
 
         with app.app_context():
-
             af = BakedGood.query.filter_by(name="Apple Fritter").first()
             if af:
                 db.session.delete(af)
@@ -39,7 +34,6 @@ class TestApp:
         '''can PATCH bakeries through "bakeries/<int:id>" route.'''
 
         with app.app_context():
-
             mb = Bakery.query.filter_by(id=1).first()
             mb.name = "ABC Bakery"
             db.session.add(mb)
@@ -60,7 +54,6 @@ class TestApp:
         '''can DELETE baked goods through "baked_goods/<int:id>" route.'''
 
         with app.app_context():
-            
             af = BakedGood.query.filter_by(name="Apple Fritter").first()
             if not af:
                 af = BakedGood(
@@ -70,7 +63,6 @@ class TestApp:
                 )
                 db.session.add(af)
                 db.session.commit()
-            
 
             response = app.test_client().delete(
                 f'/baked_goods/{af.id}'
